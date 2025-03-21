@@ -8,14 +8,14 @@ interface ProductFormProps {
     formNameResult: string;
     sampleProductPrice: string;
     formPriceResult: string;
-    setSampleProductName: React.Dispatch<React.SetStateAction<string>>;
-    setSampleProductPrice: React.Dispatch<React.SetStateAction<string>>;
-    handleSubmit: (e: React.FormEvent) => void;
+    setSampleProductName: any;
+    setSampleProductPrice: any;
+    handleSubmit: any;
     editProductId: string | null;
     loading: boolean;
 }
   
-const ProductForm: React.FC<ProductFormProps> = ({
+const ProductForm = ({
     sampleProductName,
     formNameResult,
     sampleProductPrice,
@@ -25,7 +25,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
     handleSubmit,
     editProductId,
     loading
-}) => {
+}: ProductFormProps) => {
 
     return (
       <div>

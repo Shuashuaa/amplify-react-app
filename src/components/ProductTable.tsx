@@ -24,7 +24,8 @@ interface ProductTableProps {
   deleteProduct: (id: number, index: number) => void;
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({ data, handleEdit, deleteProduct }) => {
+const ProductTable = ({ data, handleEdit, deleteProduct 
+}: ProductTableProps) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(3);
