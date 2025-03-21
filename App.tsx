@@ -1,5 +1,5 @@
 import { Amplify } from "aws-amplify";
-import { getCurrentUser, fetchUserAttributes, signIn, signOut, signUp, confirmSignUp } from "aws-amplify/auth";
+import { getCurrentUser, fetchUserAttributes, signOut } from "aws-amplify/auth";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -16,8 +16,8 @@ import { z } from "zod";
 Amplify.configure({
   Auth: {
     Cognito: {
-      userPoolClientId: import.meta.env.VITE_CLIENT_ID,
-      userPoolId: import.meta.env.VITE_POOL_ID
+      userPoolClientId: "647p68o88lfdi0plo0thqngola",
+      userPoolId: "ap-southeast-1_HOQQzITYh"
     },
   },
 });
