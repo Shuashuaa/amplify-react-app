@@ -78,7 +78,7 @@ function App() {
   }, []); 
 
   useEffect(() => {
-    console.log(data.some(name => name === "qweqeqweqwe"))
+    console.log(data.some(name => name === "qweqeqweqwee"))
   }, [data]); 
 
   const addProduct = async () => {
