@@ -7,18 +7,23 @@ import { Input } from "@/components/ui/input"
 Amplify.configure({
   Auth: {
     Cognito: {
-        userPoolClientId:, //import.meta.env.VITE_API_KEY;
-        userPoolId: //import.meta.env.VITE_API_KEY;
+        userPoolClientId: "647p68o88lfdi0plo0thqngola",
+        userPoolId: "ap-southeast-1_HOQQzITYh"
     },
   },
 });
 
+interface FormData {
+    username: string;
+    password: string;
+}
+
 function SignIn({ setUser, setIsRegistering }: { setUser: Function; setIsRegistering: Function }) {
 
-    const [formData, setFormData] = useState({ username: "", password: "" });
+    const [formData, setFormData] = useState<FormData>({ username: "", password: "" });
     const [error, setError] = useState("");
 
-    async function handleSignIn(event: { preventDefault: () => void; }) {
+    async function handleSignIn(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setError("");
 

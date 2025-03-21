@@ -13,18 +13,20 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 interface Product {
-  id: number;
-  sample_product_name: string;
-  sample_product_price: string;
-  created_at: string;
+    id: number;
+    userId: string;
+    sample_product_name: string;
+    sample_product_price: string;
+    created_at: string;
 }
 interface ProductTableProps {
-  data: Product[];
-  handleEdit: (task: Product) => void;
-  deleteProduct: (id: number, index: number) => void;
+    userDetails: { username?: string; givenName?: string; loginId?: string } | null;
+    data: Product[];
+    handleEdit: (task: Product) => void;
+    deleteProduct: (id: number, index: number) => void;
 }
 
-const ProductTable = ({ data, handleEdit, deleteProduct 
+const ProductTable = ({ userDetails, data, handleEdit, deleteProduct 
 }: ProductTableProps) => {
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -53,15 +55,15 @@ const ProductTable = ({ data, handleEdit, deleteProduct
     // if filterQuery Changes value the pagination page will go back to 1
     useEffect(() => {
         setCurrentPage(1)
-    },[filterQuery])
+    },[filterQuery, userDetails?.username])
     
     const lastItemIndex = currentPage * itemsPerPage; // 1 * 5 = 5 | 2 * 5 = 10
     const firstItemIndex = lastItemIndex - itemsPerPage; // 5 - 5 = 0 | 10 - 5 = 5
 
     // Filter the data based on the filter query
-    const filteredItems = data.filter((task) =>
-        task.sample_product_name.toLowerCase().includes(debouncedSearch.toLowerCase())
-    );
+    const filteredItems = data
+    .filter((task) => task.sample_product_name.toLowerCase().includes(debouncedSearch.toLowerCase()))
+    .filter(t => userDetails?.username ? t.userId === userDetails.username : true);
 
     const currentItems = filteredItems
     .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
@@ -107,10 +109,11 @@ const ProductTable = ({ data, handleEdit, deleteProduct
                                 
                                 { itemsPerPage == 5 ?
                                 <div className="grid sm:grid-cols-2">
-                                    <Button className="shadow border text-gray-700 bg-green-300 rounded-md hover:bg-green-400" onClick={() => handleEdit(task)}>
+                                    <Button disabled={userDetails?.username ? false : true} className="shadow border text-gray-700 bg-green-300 rounded-md hover:bg-green-400" onClick={() => handleEdit(task)}>
                                         Edit
-                                    </Button><Button className="shadow border text-gray-700 bg-red-300 rounded-md hover:bg-red-400" onClick={() => deleteProduct(task.id, firstItemIndex + index + 1)}>
-                                            Delete
+                                    </Button>
+                                    <Button disabled={userDetails?.username ? false : true} className="shadow border text-gray-700 bg-red-300 rounded-md hover:bg-red-400" onClick={() => deleteProduct(task.id, firstItemIndex + index + 1)}>
+                                        Delete
                                     </Button>
                                 </div>
                                 :

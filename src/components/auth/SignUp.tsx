@@ -8,8 +8,8 @@ import { Input } from "@/components/ui/input"
 Amplify.configure({
   Auth: {
     Cognito: {
-        userPoolClientId:, //import.meta.env.VITE_API_KEY;
-        userPoolId: //import.meta.env.VITE_API_KEY;
+        userPoolClientId: "647p68o88lfdi0plo0thqngola",
+        userPoolId: "ap-southeast-1_HOQQzITYh"
     },
   },
 });

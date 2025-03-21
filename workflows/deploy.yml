@@ -1,0 +1,27 @@
+name: Deploy Netlify Site
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set environment variables
+        run: |
+          echo "VITE_API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+          echo "VITE_API_KEY set to: ${{ secrets.API_KEY }}"  # Log the API key (only for debugging)
+          echo "VITE_CLIENT_ID=${{ secrets.VITE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "VITE_POOL_ID=${{ secrets.VITE_POOL_ID }}" >> $GITHUB_ENV
+
+      - name: Build and Deploy to Netlify
+        env:
+          VITE_API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          npm install
+          npm run build
+          curl -X POST -d {} ${{ secrets.NETLIFY_BUILD_HOOK }}

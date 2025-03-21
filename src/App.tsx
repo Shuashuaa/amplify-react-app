@@ -10,16 +10,14 @@ import SignUp from "./components/auth/SignUp";
 import './App.css';
 
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
 
 import { z } from "zod";
 
 Amplify.configure({
   Auth: {
     Cognito: {
-      userPoolClientId:, //import.meta.env.VITE_API_KEY;
-      userPoolId: //import.meta.env.VITE_API_KEY;
+      userPoolClientId: "647p68o88lfdi0plo0thqngola",
+      userPoolId: "ap-southeast-1_HOQQzITYh"
     },
   },
 });
@@ -87,6 +85,7 @@ function App() {
     setLoading(true);
 
     await axios.post("https://rnz7auon30.execute-api.ap-southeast-1.amazonaws.com/insert", {
+      userId: user?.username,
       sample_product_name: sampleProductName,
       sample_product_price: sampleProductPrice
     },
@@ -307,40 +306,42 @@ function App() {
   // end of main
 
   return (
-    <>
-    <main className="p-5 w-full text-right">
-      {user ? (
-        <>
-          <h2>Hello,<b>{user.givenName}!</b></h2>
-          <h1>Welcome, {user.username}!</h1>
-          <p>Login ID: {user.loginId}</p>
-          <Button className="mt-2" onClick={handleSignOut}>Sign out</Button>
-        </>
-      ) : isRegistering ? (
-        <SignUp setIsRegistering={setIsRegistering} />
-      ) : (
-        <SignIn setUser={setUser} setIsRegistering={setIsRegistering} />
-      )}
-    </main>
-    <div className='flex flex-col h-svh lg:flex-row lg:gap-[50px] items-center justify-center mx-10'>
-      <ProductForm 
-        sampleProductName={sampleProductName}
-        formNameResult={formNameResult}
-        sampleProductPrice={sampleProductPrice} 
-        formPriceResult={formPriceResult}
-        setSampleProductName={setSampleProductName}
-        setSampleProductPrice={setSampleProductPrice}
-        handleSubmit={handleSubmit}
-        editProductId={editProductId}
-        loading={loading}
-      />
-      <ProductTable 
-        data={data} 
-        handleEdit={handleEdit} 
-        deleteProduct={deleteProduct} 
-      />
+    <div className="h-svh">
+      <main className="pr-5 pt-5 w-full text-right">
+        {user ? (
+          <>
+            <h2>Hello,<b>{user.givenName}!</b></h2>
+            <h1>Welcome, {user.username}!</h1>
+            <p>Login ID: {user.loginId}</p>
+            <Button className="mt-2" onClick={handleSignOut}>Sign out</Button>
+          </>
+        ) : isRegistering ? (
+          <SignUp setIsRegistering={setIsRegistering} />
+        ) : (
+          <SignIn setUser={setUser} setIsRegistering={setIsRegistering} />
+        )}
+      </main>
+      <div className='flex flex-col lg:flex-row lg:gap-[50px] items-center justify-center mx-10'>
+        <ProductForm 
+          sampleProductName={sampleProductName}
+          formNameResult={formNameResult}
+          sampleProductPrice={sampleProductPrice} 
+          formPriceResult={formPriceResult}
+          setSampleProductName={setSampleProductName}
+          setSampleProductPrice={setSampleProductPrice}
+          handleSubmit={handleSubmit}
+          editProductId={editProductId}
+          loading={loading}
+        />
+        
+        <ProductTable 
+          userDetails={user}
+          data={data}
+          handleEdit={handleEdit}
+          deleteProduct={deleteProduct}
+        />
+      </div>
     </div>
-    </>
   );
 }
 
