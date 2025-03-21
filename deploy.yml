@@ -21,6 +21,8 @@ jobs:
       - name: Build and Deploy to Netlify
         env:
           VITE_API_KEY: ${{ secrets.API_KEY }}
+          VITE_API_KEY: ${{ secrets.API_KEY }}
+          VITE_API_KEY: ${{ secrets.API_KEY }}
         run: |
           npm install
           npm run build
