@@ -1,5 +1,5 @@
 import { Amplify } from "aws-amplify";
-import { getCurrentUser, fetchUserAttributes, signOut } from "aws-amplify/auth";
+import { getCurrentUser, fetchUserAttributes, signOut } from "aws-amplify/auth"; // Removed signIn, signUp, confirmSignUp
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
