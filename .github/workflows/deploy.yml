@@ -15,6 +15,8 @@ jobs:
         run: |
           echo "VITE_API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
           echo "VITE_API_KEY set to: ${{ secrets.API_KEY }}"  # Log the API key (only for debugging)
+          echo "VITE_CLIENT_ID=${{ secrets.VITE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "VITE_POOL_ID=${{ secrets.VITE_POOL_ID }}" >> $GITHUB_ENV
 
       - name: Build and Deploy to Netlify
         env:
